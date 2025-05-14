@@ -1,16 +1,18 @@
 import Navbar from "../components/Navbar";
-import {Outlet} from "react-router-dom"
+import { Outlet } from "react-router-dom";
 
-function MainLayout(){
-    return <>
-    <Navbar/>
-    <main className="pt-16 px-4 min-h-screen
-    ">
-            <Outlet/>
-    </main>
-    
+function MainLayout() {
+  return (
+    <>
+      <Navbar />
+      <main
+        className="pt-16 min-h-screen
+    "
+      >
+        <Outlet />
+      </main>
     </>
+  );
 }
 
-
-export default MainLayout
+export default MainLayout;
