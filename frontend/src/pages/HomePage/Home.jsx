@@ -1,4 +1,18 @@
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+
+
 const Home =() => {
+
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        const timer = setTimeout(()=>{
+            navigate("/login")
+        }, 5000)
+
+        return ()=>clearTimeout(timer)
+    }, [navigate])
     return <>
     
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-purple-900 text-white px-6">

@@ -1,26 +1,45 @@
-import { useState } from "react"
-import {Link} from "react-router-dom"
+import { useEffect, useState } from "react"
+import {Link, useNavigate, useLocation} from "react-router-dom"
+import {getToken, removeToken} from "../utils/token"
+import logo from "../../public/logo.png"
+
 
 function Navbar(){
 
     const [menuOpen, setMenuOpen] = useState(false)
+    const [isLog, setIsLog] = useState(false)
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    useEffect(()=>{
+        const token = getToken()
+        if(token){
+            setIsLog(true)
+
+        }
+        
+    }, [location])
+
+    const handleLogout = ()=>{
+        removeToken()
+        setIsLog(false)
+        navigate("/")
+        
+    }
     return <>
     
         <nav className="flex justify-between items-center p-4 bg-gray-900 text-white shadow-lg fixed top-0 left-0 w-full z-50">
 
             {/* Logo */}
 
-            <div className="text-2xl font-extrabold tracking-wide text-purple-400">
-                <Link to="/">AttendanceSystem</Link>
+            <div className="h-[50px] w-[50px] font-extrabold tracking-wide text-purple-400">
+                <Link to="/"><img src={logo} alt="" /></Link>
             </div>
 
             {/* Desktop Links */}
 
             <div className="hidden md:flex space-x-6 font-medium">
-                <Link className="hover:text-purple-400 transition-colors duration-200">Home</Link>
-                <Link to="/login" className="hover:text-purple-400 transition-colors duration-200">Login</Link>
-                <Link className="hover:text-purple-400 transition-colors duration-200">Logout</Link>
-                <Link to="/signIn" className="hover:text-purple-400 transition-colors duration-200">Sign In</Link>
+                {isLog ? (<Link to="/login" className="hover:text-purple-400 transition-colors duration-200" onClick={handleLogout}>Logout</Link>) : (<Link to="/login" className="hover:text-purple-400 transition-colors duration-200">Login</Link>)}
             </div>
 
             
