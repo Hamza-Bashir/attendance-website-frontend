@@ -1,28 +1,21 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import {Link, useNavigate, useLocation} from "react-router-dom"
-import {getToken, removeToken} from "../utils/token"
+import { AuthContext } from "../store/authStore"
 import logo from "../../public/logo.png"
+
 
 
 function Navbar(){
 
     const [menuOpen, setMenuOpen] = useState(false)
-    const [isLog, setIsLog] = useState(false)
+    const {isLog, logout} = useContext(AuthContext)
+    
     const navigate = useNavigate()
     const location = useLocation()
 
-    useEffect(()=>{
-        const token = getToken()
-        if(token){
-            setIsLog(true)
-
-        }
-        
-    }, [location])
 
     const handleLogout = ()=>{
-        removeToken()
-        setIsLog(false)
+        logout()
         navigate("/")
         
     }
@@ -39,7 +32,7 @@ function Navbar(){
             {/* Desktop Links */}
 
             <div className="hidden md:flex space-x-6 font-medium">
-                {isLog ? (<Link to="/login" className="hover:text-purple-400 transition-colors duration-200" onClick={handleLogout}>Logout</Link>) : (<Link to="/login" className="hover:text-purple-400 transition-colors duration-200">Login</Link>)}
+                {isLog ? (<Link className="hover:text-purple-400 transition-colors duration-200" onClick={handleLogout}>Logout</Link>) : (<Link to="/login" className="hover:text-purple-400 transition-colors duration-200">Login</Link>)}
             </div>
 
             

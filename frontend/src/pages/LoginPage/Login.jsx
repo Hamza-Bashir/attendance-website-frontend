@@ -3,6 +3,7 @@ import {useState} from "react"
 import {logIn} from "../../services/authService"
 import {toast} from "react-toastify"
 import {setToken} from "../../utils/token"
+import {login} from "../../store/authStore"
 
 function Login(){
     const navigate = useNavigate()
@@ -26,17 +27,29 @@ function Login(){
 
         try {
             const response = await logIn(data)
-            console.log(response)
             navigate("/")
             toast.success(response.data.message, {position:"top-right"})
             setToken(response.data.token)
+            login(response.data.token)
         } catch (error) {
-            console.log(error.response.data.message)
+            const errRes = error?.response?.data
+
             setData({
                 email:"",
                 password:""
             })
-            toast.error(error.response.data.message, {position:"top-right"})
+
+            if(Array.isArray(errRes?.message)){
+                errRes.message.forEach(msg=>{
+                    toast.error(msg, {position:"top-right"})
+                })
+            }else if(typeof errRes?.message === "string"){
+                toast.error(errRes.message, {position:"top-right"})
+            }else if(errRes?.error){
+                toast.error(errRes.error, {position:"top-right"})
+            }else{
+                toast.error("Something went wrong", {position:"top-right"})
+            }
         }
     }
     return <>
