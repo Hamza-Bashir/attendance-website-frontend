@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import {Link, useNavigate, useLocation} from "react-router-dom"
 import { AuthContext } from "../store/authStore"
-import logo from "../../public/logo.png"
+import {toast} from "react-toastify"
+const logo = "/logo.png"
 
 
 
@@ -17,6 +18,8 @@ function Navbar(){
     const handleLogout = ()=>{
         logout()
         navigate("/")
+        toast.success("Logout successfully", {position:"top-right"})
+
         
     }
     return <>
@@ -48,11 +51,11 @@ function Navbar(){
 
             {/* Mobile Links {toggleable} */}
 
-            <div className={`md:hidden bg-gray-800 text-white text-center w-full absolute top-16 left-0 z-40 shadow-lg transition-all duration-300 ${menuOpen ? "block" : "hidden"}`}>
-                <Link className="block py-3 hover:bg-purple-600">Home</Link>
-                <Link to="/login" className="block py-3 hover:bg-purple-600">Login</Link>
-                <Link className="block py-3 hover:bg-purple-600">Logout</Link>
-                <Link to="/signIn" className="block py-3 hover:bg-purple-600">Sign In</Link>
+            <div className={`md:hidden bg-gray-800 text-white text-center w-full h-12  absolute top-16 left-0 z-40 shadow-lg transition-all duration-300 ${menuOpen ? "block" : "hidden"}`}>
+                {isLog?(<Link className="hover:text-purple-400 transition-colors duration-200 mt-3 block" onClick={handleLogout}>Logout</Link>):(<Link to="/login" className="hover:text-purple-400 transition-colors duration-200 mt-3 block">Login</Link>)}
+                
+                
+                
 
             </div>
 

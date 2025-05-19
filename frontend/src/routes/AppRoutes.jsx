@@ -3,6 +3,8 @@ import MainLayout from "../layouts/MainLayout"
 import Home from "../pages/HomePage/Home"
 import SignIn from "../pages/signInPage/SignIn"
 import Login from "../pages/LoginPage/Login"
+import UserDashboard from "../pages/UserDashboard/UserDashboard"
+import CheckIn from "../pages/CheckInPage/CheckIn"
 
 const routes = createBrowserRouter([
     {
@@ -11,7 +13,17 @@ const routes = createBrowserRouter([
         children:[
             {path:"/", element:<Home />},
             {path:"signIn", element:<SignIn />},
-            {path:"login", element:<Login />}
+            {path:"login", element:<Login />},
+            
+        ]
+    },
+    {
+        path:"/dashboard", element:<UserDashboard/>,
+        children:[
+            {
+                path:"checkin",
+                element:<CheckIn/>
+            }
         ]
     }
 ])

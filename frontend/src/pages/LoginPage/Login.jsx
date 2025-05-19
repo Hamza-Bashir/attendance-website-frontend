@@ -1,12 +1,13 @@
 import {Link, useNavigate} from "react-router-dom"
-import {useState} from "react"
+import {useContext, useState} from "react"
 import {logIn} from "../../services/authService"
 import {toast} from "react-toastify"
-import {setToken} from "../../utils/token"
-import {login} from "../../store/authStore"
+import { AuthContext } from "../../store/authStore"
+
 
 function Login(){
     const navigate = useNavigate()
+    const {login} = useContext(AuthContext)
 
     const [data,setData] = useState({
         email:"",
@@ -27,10 +28,9 @@ function Login(){
 
         try {
             const response = await logIn(data)
-            navigate("/")
+            navigate("/dashboard")
             toast.success(response.data.message, {position:"top-right"})
-            setToken(response.data.token)
-            login(response.data.token)
+            login(response.data.token, response.data.user)
         } catch (error) {
             const errRes = error?.response?.data
 
