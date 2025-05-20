@@ -5,6 +5,7 @@ import SignIn from "../pages/signInPage/SignIn"
 import Login from "../pages/LoginPage/Login"
 import UserDashboard from "../pages/UserDashboard/UserDashboard"
 import CheckIn from "../pages/CheckInPage/CheckIn"
+import CheckOut from "../pages/CheckOutPage/CheckOut"
 
 const routes = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const routes = createBrowserRouter([
             {
                 path:"checkin",
                 element:<CheckIn/>
+            }, 
+            {
+                path:"checkout",
+                element:<CheckOut/>
             }
         ]
     }

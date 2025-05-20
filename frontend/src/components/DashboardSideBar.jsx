@@ -34,7 +34,7 @@ function DashboardSideBar(){
                 <Link to="/dashboard/checkin" className="block px-6 py-3 hover:bg-gray-700 transition">CheckIn</Link>
               </li>
               <li>
-                <Link to="/settings" className="block px-6 py-3 hover:bg-gray-700 transition">CheckOut</Link>
+                <Link to="/dashboard/checkout" className="block px-6 py-3 hover:bg-gray-700 transition">CheckOut</Link>
               </li>
               <li>
                 <Link to="/settings" className="block px-6 py-3 hover:bg-gray-700 transition">Salary Slip</Link>

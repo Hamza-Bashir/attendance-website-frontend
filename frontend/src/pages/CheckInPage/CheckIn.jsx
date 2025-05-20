@@ -7,28 +7,30 @@ import { getToken } from "../../utils/token";
 function CheckIn() {
   const [attendanceData, setAttendanceData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = getToken();
-      try {
-        const response = await axios.get("http://localhost:3001/get-attendance", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  const fetchData = async () => {
+    const token = getToken();
+    try {
+      const response = await axios.get("http://localhost:3001/get-attendance", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        const previous = response.data.previousAttendance;
-        console.log(previous)
+      const previous = response.data.previousAttendance;
+      console.log(previous)
 
-        if (previous && previous.length > 0) {
-          setAttendanceData(previous);
-        } else {
-          setAttendanceData([]);
-        }
-      } catch (err) {
-        console.log("Error fetching data");
+      if (previous && previous.length > 0) {
+        setAttendanceData(previous);
+      } else {
+        setAttendanceData([]);
       }
-    };
+    } catch (err) {
+      console.log("Error fetching data");
+    }
+  };
+
+  useEffect(() => {
+   
 
     fetchData();
   }, []);
@@ -37,6 +39,7 @@ function CheckIn() {
     try {
       const response = await checkIn();
       toast.success(response.data.message, { position: "top-right" });
+      fetchData()
     } catch (error) {
       toast.error(error.response?.data?.message || "Check-in failed", {
         position: "top-right",
