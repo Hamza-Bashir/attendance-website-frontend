@@ -6,6 +6,7 @@ import Login from "../pages/LoginPage/Login"
 import UserDashboard from "../pages/UserDashboard/UserDashboard"
 import CheckIn from "../pages/CheckInPage/CheckIn"
 import CheckOut from "../pages/CheckOutPage/CheckOut"
+import SalarySlip from "../pages/SalaryPage/SalarySlip"
 
 const routes = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const routes = createBrowserRouter([
             {
                 path:"checkout",
                 element:<CheckOut/>
+            },
+            {
+                path:"salary-slip",
+                element:<SalarySlip/>
             }
         ]
     }
