@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { checkIn } from "../../services/attendanceService";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -6,8 +6,9 @@ import { getToken } from "../../utils/token";
 
 function CheckIn() {
   const [attendanceData, setAttendanceData] = useState([]);
+  const [shouldRefresh, setShouldRefresh] = useState(false)
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async ()=>{
     const token = getToken();
     try {
       const response = await axios.get("http://localhost:3001/get-attendance", {
@@ -17,7 +18,6 @@ function CheckIn() {
       });
 
       const previous = response.data.previousAttendance;
-      console.log(previous)
 
       if (previous && previous.length > 0) {
         setAttendanceData(previous);
@@ -27,19 +27,21 @@ function CheckIn() {
     } catch (err) {
       console.log("Error fetching data");
     }
-  };
+  }, [])
+
+  
 
   useEffect(() => {
    
 
     fetchData();
-  }, []);
+  }, [fetchData, shouldRefresh]);
 
   const handleCheckin = async () => {
     try {
       const response = await checkIn();
       toast.success(response.data.message, { position: "top-right" });
-      fetchData()
+      setShouldRefresh(prev=>!prev)
     } catch (error) {
       toast.error(error.response?.data?.message || "Check-in failed", {
         position: "top-right",
